@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Include meta tag to ensure proper rendering and touch zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+  <!-- Include jQuery Mobile stylesheets -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>   
+  <!-- Include the jQuery Mobile library -->
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <link rel="stylesheet" href="moepg.css">
+<!--
+  onClick="getPageFromForm('jsgethistory.php', 'sform', 'POST')"
+  onClick="window.location.href = 'maint/mobtools.php'"
+  -->
+</head>
+<body>
+
+<div data-role="page" id="pageone" data-transition="fade" data-theme="a">
+  <div data-role="header" data-position="fixed" id="topbox">
+    <fieldset class="ui-grid-b" id="topgrid" style="padding: .2em;" >
+      <div class="ui-block-a mybuttpadding ui-btn ui-btn-inline ui-corner-all" data-theme="a" onClick="getPageFromForm('jsfindsongs.php', 'findhistory', 'POST')"> 
+        <div  class="mybuttmargin ui-icon-clock  ui-btn-icon-notext " ></div>
+      </div>
+      <div class="ui-block-b" > 
+        <form id="sform" action="javascript:void(0)" >
+        <input type="hidden" name="myaction" id="myaction" value="findsongs" />
+        <input id="search" name="search" type="text" class="mytextin ui-corner-all"  data-clear-btn="false" data-theme="a" onChange="getPageFromForm('jsfindsongs.php', 'sform', 'POST')" value="" >
+        </form>
+      </div> 
+      <div class="ui-block-c mybuttpadding ui-btn ui-btn-inline ui-corner-all" data-theme="a" data-ajax="false" onClick="getPageFromForm('jsfindsongs.php', 'sform', 'POST')">
+        <div  class="mybuttmargin ui-icon-search  ui-btn-icon-notext " ></div>
+      </div> 
+    </fieldset>
+  </div>
+
+  <div data-role="main" class="ui-content" id="mid" data-theme="a">
+     now then
+  </div>
+
+  <div data-role="footer" data-position="fixed" id="bot" data-theme="a">
+
+      
+        <div onClick="songpop()">
+          <center><div id="nowplaying" class="nowplay" ></div></center>   
+          <center><div id="nowartist"  class="nowplay"  ></div></center>
+        </div>
+      
+
+          <div id="playbox" style="display:none">
+              <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="1000" value="1">
+              <fieldset class="ui-grid-b">
+
+                  <div class="ui-block-a">
+                      <center><div id="downloadbutt" class="mybuttmargin ui-corner-all ui-btn-icon-left ui-btn ui-icon-arrow-d  ui-btn-icon" >Download</div></center>
+                  </div>
+
+                  <div class="ui-block-b">
+                      <center><div id="pausebutt"    class="mybuttmargin ui-corner-all ui-btn-icon-left ui-btn ui-icon-delete  ui-btn-icon" onClick="pause()">Pause</div></center>                  
+                  </div>
+
+                  <div class="ui-block-c">
+                      <center><div id="albumbutt"    class="mybuttmargin ui-corner-all ui-btn-icon-left ui-btn ui-icon-grid  ui-btn-icon" onClick="playnext = 'songbutt0'; getPageFromForm('jsfindsongs.php', 'findalbum', 'POST');">Album</div></center>
+                  </div>
+
+              </fieldset>
+          </div>
+
+  </div>
+
+    <div data-role="popup" id="mypopup" data-position-to="window" data-theme="a" data-transition="pop"></div> 
+
+    <form id="findalbum" name="findalbum" action="javascript:void(0)" style="display: none;">
+    <input type="hidden" name="myaction" id="myaction" value="findalbum" />  
+    <input id="search" name="search" type="text" value="" style="display: none;">
+    </form>
+
+    <form id="findhistory" name="findhistory" action="javascript:void(0)" style="display: none;">
+    <input type="hidden" id="myaction" name="myaction"  value="findhistory" />  
+    </form>
+
+    <a href="" id="downloadlink" target="_blank" download style="display: none;"></a>
+
+</div> 
+
+
+</body>
+<script>
+
+//----------------------------------------------------------------------------------------
+var myaudio = new Audio();
+
+      myaudio.addEventListener('ended', function(){
+        if ($('#' + playnext).length > 0 ) {
+          $('#' + playnext).focus();
+          $('#' + playnext).click();
+          //playnow(playnext);
+          //alert('Found with Not Null');
+          }
+          else
+          {
+            $('#nowplaying').html("");
+            $('#nowartist').html("");
+          }  
+      });
+
+var playnext = "blank";  // uses buttid to playnext    
+
+
+$( document ).ready(function() {
+//$(document).on('pageinit', function(){
+
+    console.log( "ready!" );
+
+    $("#slider-2").change(function() {
+        var slider_value = $("#slider-2").val();
+        updateSlider($("#slider-2").val());
+        });
+
+    $("#downloadbutt").click(function() {
+        console.log( "download " + document.getElementById('downloadlink').href);        
+        document.getElementById('downloadlink').click();
+        //$('#downloadlink').click();
+      });
+
+//start the document with GREETING.PHP which shows login form if needed  
+  getPageFromForm("greeting.php", "reg-form", "POST");
+});
+
+function songpop(){  // hide or show bottom player
+  console.log( $('#nowplaying').html() );
+  if ($('#playbox').is(':visible')){
+    $('#playbox').hide(1000);    
+  }
+  else
+  {
+    $('#playbox').show(50);
+  }
+ 
+}
+
+function updateSlider(newval){
+  console.log( "slider change " + newval );
+  myaudio.currentTime = myaudio.duration * newval / 1000;
+}
+
+function pause(){
+    if (myaudio.paused == false) {
+        myaudio.pause();
+        $('#pausebutt').removeClass("ui-icon-delete");
+        $('#pausebutt').addClass("ui-icon-arrow-r");
+        $('#pausebutt').html("Play");
+    } else {
+        myaudio.play();
+        $('#pausebutt').removeClass("ui-icon-arrow-r");
+        $('#pausebutt').addClass("ui-icon-delete");
+        $('#pausebutt').html("Pause");        
+    }
+}
+
+function getPageFromForm(url, formid, method){
+  console.log(url, formid, method);
+  $('#' + formid + ' #search').blur();
+  $.mobile.loading("show",{ textVisible: false, theme: 'a', html: ""});
+  var formdata =  "";  
+    if ( $( "#" + formid ).length ) { 
+            console.log("form do exists");
+            formdata =  $("#pageone #" + formid).serialize();
+      } else {
+            console.log("form NOT exists");
+      }
+
+  $.ajax({
+          url: url,
+          cache: false,
+          async: true,
+          type: method,            
+          data: formdata,
+          timeout: 5000, // in milliseconds
+          success: function(data) {              
+            $('#pageone #mid').html(data);
+            $('#pageone #mid').enhanceWithin();
+            $.mobile.loading( "hide");     
+          },
+          error: function(request, status, err) {
+            $('#pageone #mid').html(err);
+            $.mobile.loading( "hide");
+          }
+      });
+}
+
+function playnow(buttid) {
+  myaudio.src = "";
+  playnext = "songbutt" + (parseInt(buttid.substr(8), 10) + 1); // eg songbutt12
+  $(".spbh" ).removeClass("spbh");
+  $("#" + buttid).addClass("spbh");
+  console.log(playnext);
+  var playurl = decodeURIComponent($("#" + buttid).data("playurl"));
+  var title = decodeURIComponent($("#" + buttid).data("title"));
+  var artist = decodeURIComponent($("#" + buttid).data("artist"));
+  var album = decodeURIComponent($("#" + buttid).data("album"));  
+    $("#slider-2").slider();
+    $('#slider-2').hide();  // hide text box
+    //$(".ui-slider-handle").remove();
+    $('.ui-slider-track').css('margin','0 15px 0 15px').css('pointer-events','auto');
+
+    $('#pageone #playbox').enhanceWithin();
+    $('#pageone #playbox').show();
+
+//console.log("audio after=");
+
+    myaudio.src = 'deliverfile.php?filename=' + $("#" + buttid).data("playurl");
+    myaudio.play();
+
+  myaudio.ontimeupdate =  function() {
+      var progress = parseInt(1000 * myaudio.currentTime / myaudio.duration );
+//console.log(progress);
+        if (progress > 0 && progress < 1001){
+        $("#slider-2").val(progress).slider().slider("refresh");
+        }
+      };
+
+
+    $('#pausebutt').removeClass("ui-icon-arrow-r");
+    $('#pausebutt').addClass("ui-icon-delete");
+    $('#pausebutt').html("Pause");
+
+  setTimeout(function(){ $('#pageone #playbox').hide(1500); }, 4500);
+
+// set up data for GOTO ALBUM button
+    if (album.length > 0){ 
+            $('#albumbutt').prop('disabled', false).removeClass('ui-disabled');
+            $('#findalbum #search').val(album);
+      }
+      else
+      {
+            $('#albumbutt').prop('disabled', true).addClass('ui-disabled');
+      }
+
+// set up data for download button
+  var suffix = playurl.substr(playurl.lastIndexOf("."));
+    $('#downloadlink').attr('download', artist +'-' + title + suffix);
+    $('#downloadlink').attr('href', 'deliverfile.php?filename=' + playurl);
+    $('#downloadlink').attr('target', '_blank');
+
+// update whats playing details at bottom of screen
+  document.getElementById('nowplaying').innerHTML = title;
+  document.getElementById('nowartist').innerHTML = artist + ' - ' + album;
+}
+
+</script>
+</html>

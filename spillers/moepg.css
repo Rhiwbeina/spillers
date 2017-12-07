@@ -1,0 +1,48 @@
+.ui-header { background:#181660 !important; }
+.ui-page { background:#730290 !important; }
+.ui-footer { background:#181638 !important; }
+.ui-page label { color: #ffffff;}
+
+.xui-btn:focus {
+    -moz-box-shadow: inset 0 0 4px      #0f0  , 0 0 9px         #fff  !important;
+    -webkit-box-shadow: inset 0 0 4px   #0f0  , 0 0 9px         #fff  !important;
+    box-shadow: inset 0 0 4px           #0f0  , 0 0 9px         #fff  !important;
+}
+.spbh {background-color: #efe9c0 !important;}
+
+.left{text-align: left; }
+.sminfo{font-size: 10pt; margin-top: 0px; display: inline;}
+.recdate{font-size: 9pt; padding: 2pt; border: 1px solid gray;  float: right; text-overflow: ellipsis; overflow: visible; white-space: normal;}
+.notrunc{text-overflow: ellipsis; overflow: visible; white-space: normal;}
+.ptitle{font-size: 13pt; line-height: 2pt; display: inline;}
+.fillWidth{width:100%; display:inline;}
+.nowplay{ font-size: 13pt; display:inline; font-weight: normal; padding: 2pt; color: #ffffff;}
+
+.mylink{font-size: 13pt; font-weight: normal; color: #ffffff; text-decoration: none}
+a:visited {font-size: 12pt; font-weight: normal; color: #ffffff; text-decoration: none}
+a:hover   {font-size: 12pt; font-weight: normal; color: #ffffff; text-decoration: none}
+a:active  {font-size: 12pt; font-weight: normal; color: #ffffff; text-decoration: none}
+
+
+.mytextin {font-size: 14pt; font-weight: bold; margin: 0em 0em 0em 0em;}
+.mymargin {
+	margin: 0 4px 0 4px;
+	max-width : 3em;
+	height: 3em;
+}
+.mybuttmargin {
+	margin: 0.2em 0.1em 0.2em 0.1em;
+}
+.mybuttpadding {
+	margin: 0.2em 0.1em 0.2em 0.1em;
+}
+#topgrid .ui-block-a { width: 19% }
+#topgrid .ui-block-b { width: 60%; }
+#topgrid .ui-block-c { width: 19%; }
+
+.ui-input-text {margin: .1em .2em 0em .2em;}
+
+.button-wrap {
+    margin-left: .8em;
+    margin-right: .8em;
+}
