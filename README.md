@@ -13,4 +13,5 @@ login as admin password admin<br>
 use the text box and search buttons to search for ssss it should find nothing and show the setting button<br>
 here it is possible to add users and scan for music.<br>
 
-Ah forgot to mention getID3-1.9.15 is needed in the maint folder
+Ah forgot to mention getID3-1.9.15 is needed in the maint folder<br>
+
