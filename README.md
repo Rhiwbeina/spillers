@@ -1,6 +1,6 @@
 # spillers
 serve music files from LAMP sever<br>
-A set of PHP scrips to run on you home server. JQuery is used to give an 'app' like appearance on mobile devices.
+A set of PHP scrips to run on your home server. JQuery is used to give an 'app' like appearance on mobile devices.
 
 To install, cd to your web servers document root<br>
  cd /var/www/html<br>
