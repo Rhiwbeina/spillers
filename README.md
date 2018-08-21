@@ -1,5 +1,6 @@
 # spillers
 serve music files from LAMP sever<br>
+A set of PHP scrips to run on you home server. JQuery is used to give an 'app' like appearance on mobile devices.
 
 To install, cd to your web servers document root<br>
  cd /var/www/html<br>
@@ -9,7 +10,7 @@ To install, cd to your web servers document root<br>
  you need the root or admin user and password for mysql server.<br>
  <br>
 now browse to http://server-address/spillers/spillers/<br>
-login as admin password admin<br>
+login as user 'admin' with password 'admin'<br>
 use the text box and search buttons to search for ssss it should find nothing and show the setting button<br>
 here it is possible to add users and scan for music.<br>
 
